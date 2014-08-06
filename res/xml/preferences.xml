@@ -1,19 +1,36 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- opens a subscreen of settings -->
+    
+        <EditTextPreference
+            android:dialogTitle="My preference"
+            android:inputType="number"
+            android:key="channel"
+            android:summary="The channel from HiveToPc.com"
+            android:title="Tap to change" />
 
-    <SwitchPreference
-        android:key="d"
-        android:title="Start monitoring" />
+        <SwitchPreference
+             android:key="start_monitoring"
+               android:defaultValue="off"
+            android:title="Start Monitoring" />
+    
 
+    <PreferenceCategory
+        android:key="pref_key_storage_settings"
+        android:title="Waht To Monitor" >
+        
     <CheckBoxPreference
+        android:key="phone_checkbox"
         android:defaultValue="true"
         android:title="Phone calls" />
     <CheckBoxPreference
+         android:key="sms_checkbox"
         android:defaultValue="true"
         android:title="SMS" />
     <CheckBoxPreference
+         android:key="whatsapp_checkbox"
         android:defaultValue="true"
         android:title="WhatsApp" />
+        </PreferenceCategory>
 
 </PreferenceScreen>
