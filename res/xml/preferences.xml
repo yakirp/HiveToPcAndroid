@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- opens a subscreen of settings -->
+
+    <SwitchPreference
+        android:key="d"
+        android:title="Start monitoring" />
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:title="Phone calls" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:title="SMS" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:title="WhatsApp" />
+
+</PreferenceScreen>

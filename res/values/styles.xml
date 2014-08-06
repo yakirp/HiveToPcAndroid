@@ -4,6 +4,9 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    
+    <style name="PreferencesTheme">
+   <!-- <item name="android:windowBackground">@drawable/background_image</item> -->
+    <item name="android:background">#FFEAEAEA</item>
+</style>
 
 </resources>
