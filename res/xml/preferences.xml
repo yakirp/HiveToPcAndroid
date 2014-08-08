@@ -1,36 +1,39 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!-- opens a subscreen of settings -->
-    
-        <EditTextPreference
-            android:dialogTitle="My preference"
-            android:inputType="number"
-            android:key="channel"
-            android:summary="The channel from HiveToPc.com"
-            android:title="Tap to change" />
 
-        <SwitchPreference
-             android:key="start_monitoring"
-               android:defaultValue="off"
-            android:title="Start Monitoring" />
-    
+    <EditTextPreference
+        android:dialogTitle="My preference"
+        android:inputType="number"
+        android:key="channel"
+        android:summary="Please go to HiveToPc.com and wait for chnanel to be generate. Then type the channel here"
+        android:title="Tap to change" />
+
+    <SwitchPreference
+        android:defaultValue="off"
+        android:key="start_monitoring"
+        android:title="Start Monitoring"
+          android:summary="This actiob will turn the monitoring engine on or off"
+         />
 
     <PreferenceCategory
         android:key="pref_key_storage_settings"
-        android:title="Waht To Monitor" >
-        
-    <CheckBoxPreference
-        android:key="phone_checkbox"
-        android:defaultValue="true"
-        android:title="Phone calls" />
-    <CheckBoxPreference
-         android:key="sms_checkbox"
-        android:defaultValue="true"
-        android:title="SMS" />
-    <CheckBoxPreference
-         android:key="whatsapp_checkbox"
-        android:defaultValue="true"
-        android:title="WhatsApp" />
-        </PreferenceCategory>
+        android:title="Waht To Monitor" 
+          
+        >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            
+            android:key="phone_checkbox"
+            android:title="Phone calls" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="sms_checkbox"
+            android:title="SMS" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="whatsapp_checkbox"
+            android:title="WhatsApp - Coming soon!" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

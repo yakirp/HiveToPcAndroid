@@ -1,12 +1,17 @@
 package ui;
 
+import utils.PubNubHelper;
+import utils.Utils;
+
 import com.example.hivetopc.R;
 import com.pubnub.api.Callback;
 import com.pubnub.api.Pubnub;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -15,7 +20,11 @@ import android.preference.PreferenceFragment;
 
 public class SettingsFragment extends PreferenceFragment implements
 		OnSharedPreferenceChangeListener {
-	private static final String CHANNEL_KEY = "channel";
+	public static final String START_MONITORING_KEY = "start_monitoring";
+	public static final String CHANNEL_KEY = "channel";
+	public static final String PHONE_CALL_MONITORING_KEY = "phone_checkbox";
+	public static final String SMS_MONITORING_KEY = "sms_checkbox";
+	public static final String WHATSAPP_MONITORING_KEY = "whatsapp_checkbox";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -23,7 +32,23 @@ public class SettingsFragment extends PreferenceFragment implements
 
 		// Load the preferences from an XML resource
 		addPreferencesFromResource(R.xml.preferences);
+  
+		initChannelEditText();
+		
+		if (getPreferenceScreen().getSharedPreferences().getBoolean(
+				START_MONITORING_KEY, true)) {
+			Utils.startMonitoringService();
+			disableWhatToMonitor();
+		} else {
+			Utils.stopMonitoringService();
+			enableWhatToMonitor();
+		}
 
+		
+
+	}
+
+	private void initChannelEditText() {
 		final EditTextPreference etp = (EditTextPreference) findPreference(CHANNEL_KEY);
 
 		etp.setTitle(getPreferenceScreen().getSharedPreferences().getString(
@@ -37,47 +62,56 @@ public class SettingsFragment extends PreferenceFragment implements
 				etp.setTitle(newValue.toString());
 				getPreferenceScreen().getSharedPreferences().edit()
 						.putString(CHANNEL_KEY, newValue.toString()).commit();
-				
-				publishEvent(newValue.toString(), "it's works! your device is connected to this page");
+
+				PubNubHelper.getInstance().publish(newValue.toString(),
+						"it's works! your device is connected to this page");
 				return false;
 			}
 		});
-
-	}
-	
-	public void  publishEvent(String channel, String event) {
-		System.err.println("44455555555555555555555555555555555555");
-		Pubnub pubnub = new Pubnub("demo", "demo");
-		
-	 
-		
-		
-		 pubnub.publish(channel, event	, new Callback() {
-  
-			@Override
-			public void connectCallback(String arg0, Object arg1) {
-				System.err.println("publish to: "+arg1.toString());
-				super.connectCallback(arg0, arg1);
-			}
-
-			@Override
-			public void successCallback(String arg0, Object arg1, String arg2) {
-				System.err.println("publish to: "+arg0);
-				super.successCallback(arg0, arg1, arg2);
-			}
-		});
-		
 	}
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
 			String key) {
-		System.err.println(key);
 
 		if (key.equalsIgnoreCase(CHANNEL_KEY)) {
 
 		}
 
+		if (key.equalsIgnoreCase(START_MONITORING_KEY)) {
+
+			if (getPreferenceScreen().getSharedPreferences().getBoolean(
+					START_MONITORING_KEY, true)) {
+				Utils.startMonitoringService();
+				disableWhatToMonitor();
+			} else {
+				Utils.stopMonitoringService();
+				enableWhatToMonitor();
+			}
+
+		}
+
+	}
+
+	private void enableWhatToMonitor() {
+		final CheckBoxPreference phone = (CheckBoxPreference) findPreference(PHONE_CALL_MONITORING_KEY);
+		final CheckBoxPreference sms = (CheckBoxPreference) findPreference(SMS_MONITORING_KEY);
+		final CheckBoxPreference wahtsapp = (CheckBoxPreference) findPreference(WHATSAPP_MONITORING_KEY);
+
+		phone.setEnabled(true);
+		sms.setEnabled(true);
+		wahtsapp.setEnabled(false);
+
+	}
+
+	private void disableWhatToMonitor() {
+		final CheckBoxPreference phone = (CheckBoxPreference) findPreference("phone_checkbox");
+		final CheckBoxPreference sms = (CheckBoxPreference) findPreference("sms_checkbox");
+		final CheckBoxPreference wahtsapp = (CheckBoxPreference) findPreference("whatsapp_checkbox");
+
+		phone.setEnabled(false);
+		sms.setEnabled(false);
+		wahtsapp.setEnabled(false);
 	}
 
 	@Override
