@@ -2,6 +2,9 @@ package utils;
  
 public class Constants {
 
+	public static final String base64EncodedPublicKey ="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhUHUa8lf8RJIR9OmDGjKV0w8duQqJlqyx267tcDCeW8opewCR/S/PaExXmAfbHs2VPpudCL9ccGBJqv3P9Dxmx1ZRqLRU1uCd5Hrr12gQACgVqKYRa3ZuDGtwHxdGKgeVpGotsUB9XvEREeVTCB4QCVe2wuKwHGLrw4ElWBLtOr3KQ2gR9u3vGP+CupO/txrR5ngf7YtHXFEs/p++iBQt3uF02Jmfwpx0jkQKedeHj1Ag7BpehfliLCbyruHh4wYIGRnwZh1dREZW80hByh6hhGfc/GdByZkqSn0wFA+AOmfaCQtxmwXJlcUKYHWnk4Oky1O0eIyfz5yW2IeaP3ngwIDAQAB";
+
+	
 	public static final String NOTIFICATION_TITLE = "Hive To Pc"; 
 	
 }
