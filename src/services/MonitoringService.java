@@ -5,7 +5,7 @@ import ui.HiveToPcActivity;
 import utils.Constants;
 import utils.Utils;
 
-import com.example.hivetopc.R;
+import com.hivetopc.R;
 
 import android.app.Notification;
 import android.app.PendingIntent;

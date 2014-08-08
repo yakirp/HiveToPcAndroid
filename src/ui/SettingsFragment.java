@@ -2,21 +2,16 @@ package ui;
 
 import utils.PubNubHelper;
 import utils.Utils;
-
-import com.example.hivetopc.R;
-import com.pubnub.api.Callback;
-import com.pubnub.api.Pubnub;
-
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceFragment;
+
+import com.hivetopc.R;
 
 public class SettingsFragment extends PreferenceFragment implements
 		OnSharedPreferenceChangeListener {
