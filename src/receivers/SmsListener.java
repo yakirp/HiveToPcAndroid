@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 
 public class SmsListener extends BroadcastReceiver {
-
-	@Override
+  
+	@Override      
 	public void onReceive(Context context, Intent intent) {
 		if (intent.getAction()
 				.equals("android.provider.Telephony.SMS_RECEIVED")) {

@@ -7,6 +7,7 @@ import utils.Utils;
 
 import com.hivetopc.R;
 
+import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -15,15 +16,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.preference.CheckBoxPreference;
+import android.service.notification.NotificationListenerService;
+import android.service.notification.StatusBarNotification;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 
-public class MonitoringService extends Service {
+ 
+public class MonitoringService extends NotificationListenerService {
 
 	private PhoneStateListener phoneStateListener;
 	private TelephonyManager telephonyManager;
 	private SmsListener smsListener = new SmsListener();
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
@@ -34,17 +39,15 @@ public class MonitoringService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
 		start();
- 
-		
+
 		if (Utils.isUserRequestForPhoneMonitoring()) {
 			startPhoneMonitoring();
 		}
-		
+
 		if (Utils.isUserRequestForSMSMonitoring()) {
 			startSMSMonitoring();
 		}
-		
-		 
+
 		Utils.publishEvent("Monitoring Start", false);
 
 		return (START_NOT_STICKY);
@@ -79,7 +82,6 @@ public class MonitoringService extends Service {
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("android.provider.Telephony.SMS_RECEIVED");
 
-		 
 		registerReceiver(smsListener, filter);
 
 	}
@@ -124,24 +126,37 @@ public class MonitoringService extends Service {
 				PhoneStateListener.LISTEN_NONE);
 
 	}
+
 	private void stopSMSMonitoring() {
 		unregisterReceiver(smsListener);
 	}
 
 	@Override
 	public void onDestroy() {
-		
+
 		if (Utils.isUserRequestForPhoneMonitoring()) {
 			stopPhoneMonitoring();
 		}
-		
+
 		if (Utils.isUserRequestForSMSMonitoring()) {
 			stopSMSMonitoring();
 		}
-		
-		 
+
 		Utils.publishEvent("Monitoring stop", false);
 		stopForeground(true);
+	}
+
+	@Override
+	public void onNotificationPosted(StatusBarNotification sbn) {
+		System.err.println("00000000000000");
+		Utils.publishEvent(sbn.getNotification().tickerText + " " + sbn.getPackageName(),true);
+
+	}
+
+	@Override
+	public void onNotificationRemoved(StatusBarNotification sbn) {
+		// TODO Auto-generated method stub
+
 	}
 
 }
