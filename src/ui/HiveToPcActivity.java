@@ -56,30 +56,34 @@ public class HiveToPcActivity extends Activity {
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		super.onCreate(savedInstanceState);
 
-		setContentView(com.hivetopc.R.layout.mainlayout);
-
-		// compute your public key and store it in base64EncodedPublicKey
-		mHelper = new IabHelper(this, Constants.base64EncodedPublicKey);
-
-		mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
-
-			@Override
-			public void onIabSetupFinished(IabResult result) {
-				if (!result.isSuccess()) {
-					// Oh noes, there was a problem.
-					Log.d("dd", "Problem setting up In-app Billing: " + result);
-				}
-				// Have we been disposed of in the meantime? If so, quit.
-				if (mHelper == null)
-					return;
-
-				// IAB is fully set up. Now, let's get an inventory of stuff we
-				// own.
-				Log.d(TAG, "Setup successful. Querying inventory.");
-				mHelper.queryInventoryAsync(mGotInventoryListener);
-
-			}
-		});
+		getFragmentManager().beginTransaction()
+		.replace(android.R.id.content, new SettingsFragment())
+		.commit();
+		
+//		setContentView(com.hivetopc.R.layout.mainlayout);
+//
+//		// compute your public key and store it in base64EncodedPublicKey
+//		mHelper = new IabHelper(this, Constants.base64EncodedPublicKey);
+//
+//		mHelper.startSetup(new IabHelper.OnIabSetupFinishedListener() {
+//
+//			@Override
+//			public void onIabSetupFinished(IabResult result) {
+//				if (!result.isSuccess()) {
+//					// Oh noes, there was a problem.
+//					Log.d("dd", "Problem setting up In-app Billing: " + result);
+//				}
+//				// Have we been disposed of in the meantime? If so, quit.
+//				if (mHelper == null)
+//					return;
+//
+//				// IAB is fully set up. Now, let's get an inventory of stuff we
+//				// own.
+//				Log.d(TAG, "Setup successful. Querying inventory.");
+//				mHelper.queryInventoryAsync(mGotInventoryListener);
+//
+//			}
+//		});
 
 	}
 
