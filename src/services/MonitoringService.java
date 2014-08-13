@@ -14,6 +14,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.CheckBoxPreference;
 import android.service.notification.NotificationListenerService;
@@ -21,19 +22,14 @@ import android.service.notification.StatusBarNotification;
 import android.support.v4.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
  
-public class MonitoringService extends NotificationListenerService {
+public class MonitoringService extends Service {
 
-	private PhoneStateListener phoneStateListener;
+	private PhoneStateListener phoneStateListener; 
 	private TelephonyManager telephonyManager;
-	private SmsListener smsListener = new SmsListener();
-
-	@Override
-	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private SmsListener smsListener = new SmsListener();	
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -147,16 +143,8 @@ public class MonitoringService extends NotificationListenerService {
 	}
 
 	@Override
-	public void onNotificationPosted(StatusBarNotification sbn) {
-		System.err.println("00000000000000");
-		Utils.publishEvent(sbn.getNotification().tickerText + " " + sbn.getPackageName(),true);
-
-	}
-
-	@Override
-	public void onNotificationRemoved(StatusBarNotification sbn) {
+	public IBinder onBind(Intent intent) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
-
 }
