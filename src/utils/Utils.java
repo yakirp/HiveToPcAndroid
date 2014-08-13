@@ -60,7 +60,18 @@ public class Utils {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(Application.getContext());
 		return prefs.getBoolean(SettingsFragment.SMS_MONITORING_KEY, false);
-
+	}
+	
+	public static boolean isUserRequestForWhatsapp() {
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(Application.getContext());
+		return prefs.getBoolean(SettingsFragment.WHATSAPP_MONITORING_KEY, false);
+	}
+	
+	public static boolean isUserRequestForNotificationData() {
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(Application.getContext());
+		return prefs.getBoolean(SettingsFragment.NOTIFICATION_DATA_MONITORING_KEY, false);
 	}
 
 }

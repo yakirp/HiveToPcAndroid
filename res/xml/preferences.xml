@@ -18,8 +18,7 @@
 
     <PreferenceCategory
         android:key="pref_key_storage_settings"
-        android:title="Waht To Monitor" 
-          
+        android:title="What To Monitor" 
         >
         <CheckBoxPreference
             android:defaultValue="true"
@@ -31,9 +30,13 @@
             android:key="sms_checkbox"
             android:title="SMS" />
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="whatsapp_checkbox"
-            android:title="WhatsApp - Coming soon!" />
+            android:title="WhatsApp" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="notification_data_checkbox"
+            android:title="Notification Details" />
     </PreferenceCategory>
 
 </PreferenceScreen>

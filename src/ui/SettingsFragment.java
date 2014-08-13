@@ -20,6 +20,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	public static final String PHONE_CALL_MONITORING_KEY = "phone_checkbox";
 	public static final String SMS_MONITORING_KEY = "sms_checkbox";
 	public static final String WHATSAPP_MONITORING_KEY = "whatsapp_checkbox";
+	public static final String NOTIFICATION_DATA_MONITORING_KEY = "notification_data_checkbox";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class SettingsFragment extends PreferenceFragment implements
 						.putString(CHANNEL_KEY, newValue.toString()).commit();
 
 				PubNubHelper.getInstance().publish(newValue.toString(),
-						"it's works! your device is connected to this page");
+						"Your device is connected to this page");
 				return false;
 			}
 		});
@@ -92,10 +93,12 @@ public class SettingsFragment extends PreferenceFragment implements
 		final CheckBoxPreference phone = (CheckBoxPreference) findPreference(PHONE_CALL_MONITORING_KEY);
 		final CheckBoxPreference sms = (CheckBoxPreference) findPreference(SMS_MONITORING_KEY);
 		final CheckBoxPreference wahtsapp = (CheckBoxPreference) findPreference(WHATSAPP_MONITORING_KEY);
+		final CheckBoxPreference notificationData = (CheckBoxPreference) findPreference(NOTIFICATION_DATA_MONITORING_KEY);
 
 		phone.setEnabled(true);
 		sms.setEnabled(true);
-		wahtsapp.setEnabled(false);
+		wahtsapp.setEnabled(true);
+		notificationData.setEnabled(true);
 
 	}
 
@@ -103,10 +106,12 @@ public class SettingsFragment extends PreferenceFragment implements
 		final CheckBoxPreference phone = (CheckBoxPreference) findPreference("phone_checkbox");
 		final CheckBoxPreference sms = (CheckBoxPreference) findPreference("sms_checkbox");
 		final CheckBoxPreference wahtsapp = (CheckBoxPreference) findPreference("whatsapp_checkbox");
+		final CheckBoxPreference notificationData = (CheckBoxPreference) findPreference(NOTIFICATION_DATA_MONITORING_KEY);
 
 		phone.setEnabled(false);
 		sms.setEnabled(false);
 		wahtsapp.setEnabled(false);
+		notificationData.setEnabled(false);
 	}
 
 	@Override
