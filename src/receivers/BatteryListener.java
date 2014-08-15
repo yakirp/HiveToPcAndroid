@@ -30,7 +30,7 @@ public class BatteryListener extends BroadcastReceiver {
             	message = "Battery level: " + level;
             }
             Log.d("Hive", message);
-            Utils.publishEvent(message, false);
+            Utils.publishEvent(message, true);
 		}
 	}
 

@@ -3,11 +3,13 @@ package utils;
 import services.MonitoringService;
 import ui.SettingsFragment;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 
@@ -16,7 +18,7 @@ public class Utils {
 	public static void publishEvent(String event,
 			boolean publishOnlyIfMonitoring) {
 		if (publishOnlyIfMonitoring) {
-			if (isMonitoring()) {
+			if (isMonitoring() && !isScreenOn()) {
 				if (!getCurrentChannel().equalsIgnoreCase("")) {
 					PubNubHelper.getInstance().publish(getCurrentChannel(),
 							event);
@@ -104,6 +106,18 @@ public class Utils {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(Application.getContext());
 		return prefs.getBoolean(SettingsFragment.BATTERY_MONITORING_KEY, false);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public static boolean isScreenOn() {
+		Application.getContext();
+		PowerManager powerManager = (PowerManager) Application.getContext().getSystemService(Context.POWER_SERVICE);
+		if (powerManager.isScreenOn())
+		{ 
+			return true; 
+		}
+		
+		return false;
 	}
 
 }
