@@ -19,7 +19,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	public static final String CHANNEL_KEY = "channel";
 	public static final String PHONE_CALL_MONITORING_KEY = "phone_checkbox";
 	public static final String SMS_MONITORING_KEY = "sms_checkbox";
-	public static final String WHATSAPP_MONITORING_KEY = "whatsapp_checkbox";
+	public static final String NOTIFICATIONS_MONITORING_KEY = "notifications_checkbox";
 	public static final String NOTIFICATION_DATA_MONITORING_KEY = "notification_data_checkbox";
 
 	@Override
@@ -39,9 +39,6 @@ public class SettingsFragment extends PreferenceFragment implements
 			Utils.stopMonitoringService();
 			enableWhatToMonitor();
 		}
-
-		
-
 	}
 
 	private void initChannelEditText() {
@@ -92,7 +89,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	private void enableWhatToMonitor() {
 		final CheckBoxPreference phone = (CheckBoxPreference) findPreference(PHONE_CALL_MONITORING_KEY);
 		final CheckBoxPreference sms = (CheckBoxPreference) findPreference(SMS_MONITORING_KEY);
-		final CheckBoxPreference wahtsapp = (CheckBoxPreference) findPreference(WHATSAPP_MONITORING_KEY);
+		final CheckBoxPreference wahtsapp = (CheckBoxPreference) findPreference(NOTIFICATIONS_MONITORING_KEY);
 		final CheckBoxPreference notificationData = (CheckBoxPreference) findPreference(NOTIFICATION_DATA_MONITORING_KEY);
 
 		phone.setEnabled(true);
@@ -105,12 +102,12 @@ public class SettingsFragment extends PreferenceFragment implements
 	private void disableWhatToMonitor() {
 		final CheckBoxPreference phone = (CheckBoxPreference) findPreference("phone_checkbox");
 		final CheckBoxPreference sms = (CheckBoxPreference) findPreference("sms_checkbox");
-		final CheckBoxPreference wahtsapp = (CheckBoxPreference) findPreference("whatsapp_checkbox");
+		final CheckBoxPreference notifications = (CheckBoxPreference) findPreference("notifications_checkbox");
 		final CheckBoxPreference notificationData = (CheckBoxPreference) findPreference(NOTIFICATION_DATA_MONITORING_KEY);
 
 		phone.setEnabled(false);
 		sms.setEnabled(false);
-		wahtsapp.setEnabled(false);
+		notifications.setEnabled(false);
 		notificationData.setEnabled(false);
 	}
 

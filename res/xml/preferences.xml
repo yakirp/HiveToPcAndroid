@@ -31,8 +31,8 @@
             android:title="SMS" />
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="whatsapp_checkbox"
-            android:title="WhatsApp" />
+            android:key="notifications_checkbox"
+            android:title="Notifications" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="notification_data_checkbox"

@@ -1,5 +1,7 @@
 package ui;
 
+import services.HiveAccessibilityService;
+import services.NLService;
 import utils.Constants;
 import utils.IabHelper;
 import utils.IabResult;
@@ -59,6 +61,20 @@ public class HiveToPcActivity extends Activity {
 		getFragmentManager().beginTransaction()
 		.replace(android.R.id.content, new SettingsFragment())
 		.commit();
+		
+		if (android.os.Build.VERSION.SDK_INT >= 19) {
+			Log.d(TAG, "Current build version is bigger than 19");
+    		if (!Utils.isNotificationSettingsEnabled()) {
+    			Log.d(TAG, "NotificationSettings is disabled"); 
+    			startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+    		}
+    	} else if (android.os.Build.VERSION.SDK_INT < 19) {
+    		Log.d(TAG, "Current build version is less than 19");
+    		if (HiveAccessibilityService.isAccessibilitySettingsOn()) {
+    			Intent intent = new Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS);
+    			startActivityForResult(intent, 0);
+    		}
+    	}
 		
 //		setContentView(com.hivetopc.R.layout.mainlayout);
 //

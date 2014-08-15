@@ -36,7 +36,7 @@ public class MonitoringService extends Service {
 
 		start();
 
-		if (Utils.isUserRequestForPhoneMonitoring()) {
+		if (Utils.isUserRequestForPhoneMonitoring()) {  
 			startPhoneMonitoring();
 		}
 
@@ -54,23 +54,20 @@ public class MonitoringService extends Service {
 		dismissIntent.setAction("stop");
 		PendingIntent piDismiss = PendingIntent.getService(this, 0,
 				dismissIntent, 0);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(
+  				this)
+  				.setSmallIcon(R.drawable.ic_launcher) 
+  				.setContentTitle(Constants.NOTIFICATION_TITLE)
+  				.setDefaults(Notification.DEFAULT_LIGHTS)
+  				.setOngoing(true)
+  				.setStyle(new NotificationCompat.BigTextStyle())
+  				.addAction(R.drawable.ic_launcher, "Stop Monitoring", piDismiss);
 
-		// Constructs the Builder object.
-		NotificationCompat.Builder builder = new NotificationCompat.Builder(
-				this)
-				.setSmallIcon(R.drawable.ic_launcher)
-				.setContentTitle(Constants.NOTIFICATION_TITLE)
-				.setContentText("Active channel " + Utils.getCurrentChannel())
-				.setDefaults(Notification.DEFAULT_ALL)
+  		Notification n = builder.build();
 
-				.setStyle(new NotificationCompat.BigTextStyle())
-				.addAction(R.drawable.ic_launcher, "Stop Monitoring", piDismiss);
+  		n.flags |= Notification.FLAG_NO_CLEAR; 
 
-		Notification n = builder.build();
-
-		n.flags |= Notification.FLAG_NO_CLEAR;
-
-		startForeground(1337, n);
+  		startForeground(1337, n);
 	}
 
 	private void startSMSMonitoring() {
@@ -144,7 +141,12 @@ public class MonitoringService extends Service {
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override     
+	public boolean onUnbind(Intent mIntent) {       
+	    boolean mOnUnbind = super.onUnbind(mIntent);        
+	    return mOnUnbind;     
 	}
 }
