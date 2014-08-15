@@ -1,5 +1,6 @@
 package services;
 
+import receivers.BatteryListener;
 import receivers.SmsListener;
 import ui.HiveToPcActivity;
 import utils.Constants;
@@ -29,7 +30,8 @@ public class MonitoringService extends Service {
 
 	private PhoneStateListener phoneStateListener; 
 	private TelephonyManager telephonyManager;
-	private SmsListener smsListener = new SmsListener();	
+	private SmsListener smsListener = new SmsListener();
+	private BatteryListener batteryListener = new BatteryListener();
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -42,6 +44,10 @@ public class MonitoringService extends Service {
 
 		if (Utils.isUserRequestForSMSMonitoring()) {
 			startSMSMonitoring();
+		}
+		
+		if (Utils.isUserRequestForBatteryMonitoring()) {
+			startBatteryMonitoring();
 		}
 
 		Utils.publishEvent("Monitoring Start", false);
@@ -71,12 +77,17 @@ public class MonitoringService extends Service {
 	}
 
 	private void startSMSMonitoring() {
-
 		IntentFilter filter = new IntentFilter();
 		filter.addAction("android.provider.Telephony.SMS_RECEIVED");
 
 		registerReceiver(smsListener, filter);
+	}
+	
+	private void startBatteryMonitoring() {
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Intent.ACTION_BATTERY_CHANGED);
 
+		registerReceiver(batteryListener, filter);
 	}
 
 	private void startPhoneMonitoring() {
@@ -123,6 +134,10 @@ public class MonitoringService extends Service {
 	private void stopSMSMonitoring() {
 		unregisterReceiver(smsListener);
 	}
+	
+	private void stopBatteryMonitoring() {
+		unregisterReceiver(batteryListener);
+	}
 
 	@Override
 	public void onDestroy() {
@@ -133,6 +148,10 @@ public class MonitoringService extends Service {
 
 		if (Utils.isUserRequestForSMSMonitoring()) {
 			stopSMSMonitoring();
+		}
+		
+		if (Utils.isUserRequestForBatteryMonitoring()) {
+			stopBatteryMonitoring();
 		}
 
 		Utils.publishEvent("Monitoring stop", false);

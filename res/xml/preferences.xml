@@ -37,6 +37,10 @@
             android:defaultValue="false"
             android:key="notification_data_checkbox"
             android:title="Notification Details" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="battery_checkbox"
+            android:title="Battery" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -21,6 +21,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	public static final String SMS_MONITORING_KEY = "sms_checkbox";
 	public static final String NOTIFICATIONS_MONITORING_KEY = "notifications_checkbox";
 	public static final String NOTIFICATION_DATA_MONITORING_KEY = "notification_data_checkbox";
+	public static final String BATTERY_MONITORING_KEY = "battery_checkbox";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -89,13 +90,15 @@ public class SettingsFragment extends PreferenceFragment implements
 	private void enableWhatToMonitor() {
 		final CheckBoxPreference phone = (CheckBoxPreference) findPreference(PHONE_CALL_MONITORING_KEY);
 		final CheckBoxPreference sms = (CheckBoxPreference) findPreference(SMS_MONITORING_KEY);
-		final CheckBoxPreference wahtsapp = (CheckBoxPreference) findPreference(NOTIFICATIONS_MONITORING_KEY);
+		final CheckBoxPreference notifications = (CheckBoxPreference) findPreference(NOTIFICATIONS_MONITORING_KEY);
 		final CheckBoxPreference notificationData = (CheckBoxPreference) findPreference(NOTIFICATION_DATA_MONITORING_KEY);
+		final CheckBoxPreference battery = (CheckBoxPreference) findPreference(BATTERY_MONITORING_KEY);
 
 		phone.setEnabled(true);
 		sms.setEnabled(true);
-		wahtsapp.setEnabled(true);
+		notifications.setEnabled(true);
 		notificationData.setEnabled(true);
+		battery.setEnabled(true);
 
 	}
 
@@ -104,11 +107,13 @@ public class SettingsFragment extends PreferenceFragment implements
 		final CheckBoxPreference sms = (CheckBoxPreference) findPreference("sms_checkbox");
 		final CheckBoxPreference notifications = (CheckBoxPreference) findPreference("notifications_checkbox");
 		final CheckBoxPreference notificationData = (CheckBoxPreference) findPreference(NOTIFICATION_DATA_MONITORING_KEY);
+		final CheckBoxPreference battery = (CheckBoxPreference) findPreference(BATTERY_MONITORING_KEY);
 
 		phone.setEnabled(false);
 		sms.setEnabled(false);
 		notifications.setEnabled(false);
 		notificationData.setEnabled(false);
+		battery.setEnabled(false);
 	}
 
 	@Override

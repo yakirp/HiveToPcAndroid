@@ -99,5 +99,11 @@ public class Utils {
 				.getDefaultSharedPreferences(Application.getContext());
 		return prefs.getBoolean(SettingsFragment.NOTIFICATION_DATA_MONITORING_KEY, false);
 	}
+	
+	public static boolean isUserRequestForBatteryMonitoring() {
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(Application.getContext());
+		return prefs.getBoolean(SettingsFragment.BATTERY_MONITORING_KEY, false);
+	}
 
 }
