@@ -31,17 +31,23 @@ public class NLService extends NotificationListenerService {
     	}
     	if (Utils.isUserRequestForNotifications()) {
     		Notification mNotification=sbn.getNotification();
-            if (mNotification!=null){
+            if (mNotification!=null){ 
+            	if (sbn.getPackageName().equals("android")) 
+            		return;
             	String applicationName = Utils.getApplicationNameForPackageName(sbn.getPackageName());
             	Log.d(TAG, "Notification from: " + applicationName);
             	if (mNotification.tickerText != null) {
-            		Log.d(TAG, mNotification.tickerText.toString());
+            		Log.d(TAG, "TickerText: " + mNotification.tickerText.toString());
             		if (Utils.isUserRequestForNotificationData()) {
+            			Log.d(TAG, "Publishing with notification data");
             			Utils.publishEvent(applicationName + ": " + mNotification.tickerText.toString(), true);
             		}
             		else {
+            			Log.d(TAG, "Publishing without notification data");
         				Utils.publishEvent(applicationName + " notification", true);
         			}
+            	} else {
+            		Utils.publishEvent("Notification from: " + applicationName, true);
             	}
             }
     	}

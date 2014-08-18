@@ -18,9 +18,9 @@ public class Utils {
 	public static void publishEvent(String event,
 			boolean publishOnlyIfMonitoring) {
 		if (publishOnlyIfMonitoring) {
-			if (isMonitoring() && !isScreenOn()) {
+			if (isMonitoring()) {
 				if (!getCurrentChannel().equalsIgnoreCase("")) {
-					PubNubHelper.getInstance().publish(getCurrentChannel(),
+					PubNubHelper.getInstance().publish(getCurrentChannel(), 
 							event);
 				}
 			}
@@ -110,13 +110,14 @@ public class Utils {
 	
 	@SuppressWarnings("deprecation")
 	public static boolean isScreenOn() {
-		Application.getContext();
-		PowerManager powerManager = (PowerManager) Application.getContext().getSystemService(Context.POWER_SERVICE);
-		if (powerManager.isScreenOn())
-		{ 
-			return true; 
-		}
-		
+//		Application.getContext();
+//		PowerManager powerManager = (PowerManager) Application.getContext().getSystemService(Context.POWER_SERVICE);
+//		if (powerManager.isScreenOn())
+//		{ 
+//			return true; 
+//		}
+//		
+//		return false;
 		return false;
 	}
 

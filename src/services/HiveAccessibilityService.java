@@ -47,19 +47,20 @@ public class HiveAccessibilityService extends AccessibilityService {
                 if (messages.size() > 0) {
                 	final String notificationMessage = (String) messages.get(0);
                 	Log.v(TAG, "Captured notification message [" + notificationMessage + "] for source [" + sourcePackageName + "]");                   
-                    Log.v(TAG, "Broadcasting for " + Constants.ACTION_CATCH_NOTIFICATION);
                     
                     if (Utils.isUserRequestForNotifications()) {
-                        	String applicationName = Utils.getApplicationNameForPackageName(sourcePackageName);
-                        	Log.d("Hive", applicationName + " notification");
-                        	if (notificationMessage != null) {
-                        		Log.d("Hive", notificationMessage);
-                        		if (Utils.isUserRequestForNotificationData()) {
-                        			Utils.publishEvent(applicationName + ": " + notificationMessage, true);
-                        		} else {
-                        			Utils.publishEvent(applicationName + " notification", true);
-                        		}
-                        	}
+                		if (sourcePackageName.equals("android"))
+                			return;
+                    	String applicationName = Utils.getApplicationNameForPackageName(sourcePackageName);
+                    	Log.d("Hive", applicationName + " notification");
+                    	if (notificationMessage != null) {
+                    		Log.d("Hive", notificationMessage);
+                    		if (Utils.isUserRequestForNotificationData()) {
+                    			Utils.publishEvent(applicationName + ": " + notificationMessage, true);
+                    		} else {
+                    			Utils.publishEvent(applicationName + " notification", true);
+                    		}
+                    	}
                 	}
                 } else {
                 	Log.e(TAG, "Notification Message is empty. Can not broadcast"); 
@@ -108,14 +109,6 @@ public class HiveAccessibilityService extends AccessibilityService {
         
         this.setServiceInfo(info);
 	}
-	
-	 public static final class Constants {
-         
-        public static final String EXTRA_MESSAGE = "extra_message"; 
-        public static final String EXTRA_PACKAGE = "extra_package";
-        public static final String ACTION_CATCH_TOAST = "com.mytest.accessibility.CATCH_TOAST"; 
-        public static final String ACTION_CATCH_NOTIFICATION = "com.mytest.accessibility.CATCH_NOTIFICATION";   
-    }
 
 	 /**
      * Check if Accessibility Service is enabled. 
