@@ -1,5 +1,13 @@
 package services;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import receivers.BatteryListener;
 import receivers.SmsListener;
 import ui.HiveToPcActivity;
@@ -15,6 +23,10 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.MediaRecorder;
+import android.media.MediaRecorder.AudioEncoder;
+import android.media.MediaRecorder.AudioSource;
+import android.media.MediaRecorder.OutputFormat;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.CheckBoxPreference;
@@ -32,10 +44,40 @@ public class MonitoringService extends Service {
 	private TelephonyManager telephonyManager;
 	private SmsListener smsListener = new SmsListener();
 	private BatteryListener batteryListener = new BatteryListener();
+	MediaRecorder recorder = null;
 
+	private void startRecording(File file) {
+		if (recorder != null) {
+			recorder.release();
+		}
+		recorder = new MediaRecorder();
+		recorder.setAudioSource(AudioSource.MIC);
+		recorder.setOutputFormat(OutputFormat.THREE_GPP);
+		recorder.setAudioEncoder(AudioEncoder.AMR_WB);
+		recorder.setOutputFile(file.getAbsolutePath());
+		try {
+			recorder.prepare();
+			recorder.start();
+		} catch (IOException e) {
+			Log.e("giftlist",
+					"io problems while preparing [" + file.getAbsolutePath()
+							+ "]: " + e.getMessage());
+		}
+	}
+	
+	private void stopRecording() {
+		if (recorder != null) {
+			recorder.stop();
+			recorder.release();
+			recorder = null;
+		}
+	}
+	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 
+//		startRecording(new File("/dev/null"));
+		
 		start();
 
 		if (Utils.isUserRequestForPhoneMonitoring()) {  
@@ -50,7 +92,7 @@ public class MonitoringService extends Service {
 			startBatteryMonitoring();
 		}
 
-		Utils.publishEvent("Monitoring Start", false);
+		Utils.publishHiveNotification("Monitoring Start");
 
 		return (START_NOT_STICKY);
 	}
@@ -96,28 +138,22 @@ public class MonitoringService extends Service {
 		phoneStateListener = new PhoneStateListener() {
 			@Override
 			public void onCallStateChanged(int state, final String number) {
-				String currentPhoneState = null;
+				String currentPhoneState = "";
+				
 				switch (state) {
 				case TelephonyManager.CALL_STATE_RINGING:
 
 					currentPhoneState = "Device is ringing. Call from "
 							+ number;
-
-					Utils.publishEvent(
-							"Device is ringing. Call from " + number, true);
-
 					break;
 				case TelephonyManager.CALL_STATE_OFFHOOK:
 					currentPhoneState = "Device call state is currently Off Hook";
-					Utils.publishEvent(currentPhoneState, true);
 					break;
 				case TelephonyManager.CALL_STATE_IDLE:
 					currentPhoneState = "Device call state is currently Idle";
-
-					Utils.publishEvent(currentPhoneState, true);
 					break;
 				}
-
+				Utils.publishPhoneNotification(currentPhoneState);
 			}
 
 		};
@@ -154,7 +190,7 @@ public class MonitoringService extends Service {
 			stopBatteryMonitoring();
 		}
 
-		Utils.publishEvent("Monitoring stop", false);
+		Utils.publishHiveNotification("Monitoring Stop");
 		stopForeground(true);
 	}
 

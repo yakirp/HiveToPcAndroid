@@ -1,11 +1,18 @@
 package receivers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import utils.Utils;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 public class SmsListener extends BroadcastReceiver {
   
@@ -26,12 +33,10 @@ public class SmsListener extends BroadcastReceiver {
 						msgs[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
 						msg_from = msgs[i].getOriginatingAddress();
 						String msgBody = msgs[i].getMessageBody();
-						Utils.publishEvent(String.format("SMS from '{0}'",
-								msg_from),true);
+						
+						Utils.publishSMSNotification("SMS From: " + msg_from);
 					}
-				} catch (Exception e) {
-					// Ignroe
-				}
+				} catch (Exception e) {}
 			}
 		}
 

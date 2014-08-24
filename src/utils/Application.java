@@ -1,7 +1,5 @@
 package utils;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import android.content.Context;
 
 public class Application extends android.app.Application {

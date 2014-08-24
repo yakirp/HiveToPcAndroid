@@ -144,7 +144,7 @@ public class HiveToPcActivity extends Activity {
 						.commit();
 				//
 
-				Utils.publishEvent("Hi... i'm here.", false);
+				Utils.publishEvent("Hi... i'm here.", false); 
 
 			}
 

@@ -1,5 +1,11 @@
 package receivers;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import utils.Utils;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -23,14 +29,8 @@ public class BatteryListener extends BroadcastReceiver {
             if (rawlevel >= 0 && scale > 0) {
                 level = (rawlevel * 100) / scale;
             }
-            String message = "";
-            if (isCharging) {
-            	message = "Battery level: " + level + ", charging"; 
-            } else {
-            	message = "Battery level: " + level;
-            }
-            Log.d("Hive", message);
-            Utils.publishEvent(message, true);
+            
+            Utils.publishBatteryNotification(level, isCharging);
 		}
 	}
 

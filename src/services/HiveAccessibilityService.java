@@ -56,9 +56,9 @@ public class HiveAccessibilityService extends AccessibilityService {
                     	if (notificationMessage != null) {
                     		Log.d("Hive", notificationMessage);
                     		if (Utils.isUserRequestForNotificationData()) {
-                    			Utils.publishEvent(applicationName + ": " + notificationMessage, true);
+                    			Utils.publishStatusBarNotification(applicationName, notificationMessage);
                     		} else {
-                    			Utils.publishEvent(applicationName + " notification", true);
+                    			Utils.publishStatusBarNotification(applicationName, "Notification");
                     		}
                     	}
                 	}

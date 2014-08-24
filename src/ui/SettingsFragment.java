@@ -57,8 +57,7 @@ public class SettingsFragment extends PreferenceFragment implements
 				getPreferenceScreen().getSharedPreferences().edit()
 						.putString(CHANNEL_KEY, newValue.toString()).commit();
 
-				PubNubHelper.getInstance().publish(newValue.toString(),
-						"Your device is connected to this page");
+				Utils.publishHiveNotification("Your device is connected to this page");
 				return false;
 			}
 		});

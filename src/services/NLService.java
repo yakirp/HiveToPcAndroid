@@ -1,10 +1,17 @@
 package services;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import utils.Utils;
 import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.text.format.DateFormat;
 import android.util.Log;
 
 @SuppressLint("NewApi")
@@ -40,14 +47,14 @@ public class NLService extends NotificationListenerService {
             		Log.d(TAG, "TickerText: " + mNotification.tickerText.toString());
             		if (Utils.isUserRequestForNotificationData()) {
             			Log.d(TAG, "Publishing with notification data");
-            			Utils.publishEvent(applicationName + ": " + mNotification.tickerText.toString(), true);
+            			Utils.publishStatusBarNotification(applicationName, mNotification.tickerText.toString());
             		}
             		else {
             			Log.d(TAG, "Publishing without notification data");
-        				Utils.publishEvent(applicationName + " notification", true);
+        				Utils.publishStatusBarNotification(applicationName, "Notification");
         			}
             	} else {
-            		Utils.publishEvent("Notification from: " + applicationName, true);
+            		Utils.publishStatusBarNotification(applicationName, "Notification");
             	}
             }
     	}
