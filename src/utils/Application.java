@@ -14,7 +14,7 @@ private static Context appContext;
 	 
 	    setContext(this.getApplicationContext());
 		super.onCreate();
-	}
+	}  
 
 	public static Context getContext() {
 		return appContext;

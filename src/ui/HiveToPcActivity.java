@@ -3,10 +3,6 @@ package ui;
 import services.HiveAccessibilityService;
 import services.NLService;
 import utils.Constants;
-import utils.IabHelper;
-import utils.IabResult;
-import utils.Inventory;
-import utils.Purchase;
 import utils.Utils;
 import android.R;
 import android.app.Activity;
@@ -22,36 +18,19 @@ public class HiveToPcActivity extends Activity {
 
 	protected static final String TAG = "hive";
 
-	// Does the user have the premium upgrade?
-	boolean mIsPremium = false;
-
-	// Does the user have an active subscription to the infinite gas plan?
-	boolean mSubscribedToHive = false;
+	 
 
 	// SKUs for our products: the premium upgrade (non-consumable) and gas
 	// (consumable)
 	static final String SKU_PREMIUM = "monthly_license";
 	static final String SKU_GAS = "monthly_license";
 
-	// SKU for our subscription (infinite gas)
-	static final String HIVE_INFINITE_GAS = "monthly_license";
+	 
 
-	// (arbitrary) request code for the purchase flow
-	static final int RC_REQUEST = 10001;
+	 
 
-	// Graphics for the gas gauge
-	static int[] TANK_RES_IDS = { R.drawable.ic_delete,
-			R.drawable.ic_dialog_alert, R.drawable.ic_dialog_map,
-			R.drawable.ic_delete, R.drawable.ic_dialog_info };
-
-	// How many units (1/4 tank is our unit) fill in the tank.
-	static final int TANK_MAX = 4;
-
-	// Current amount of gas in tank, in units
-	int mTank;
-
-	// The helper object
-	IabHelper mHelper;
+	 
+ 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +82,7 @@ public class HiveToPcActivity extends Activity {
 
 	}
 
+<<<<<<< HEAD
 	// Listener that's called when we finish querying the items and
 	// subscriptions we own
 	IabHelper.QueryInventoryFinishedListener mGotInventoryListener = new IabHelper.QueryInventoryFinishedListener() {
@@ -298,63 +278,21 @@ public class HiveToPcActivity extends Activity {
 			Log.d(TAG, "End consumption flow.");
 		}
 	};
+=======
+ 
+ 
+  
+>>>>>>> origin/master
 
 	// We're being destroyed. It's important to dispose of the helper here!
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 
-		// very important:
-		Log.d(TAG, "Destroying helper.");
-		if (mHelper != null) {
-			mHelper.dispose();
-			mHelper = null;
-		}
+		 
 	}
 
-	// updates UI to reflect model
-	public void updateUi() {
-	
-	
-  
-	  
-  
-		
-	}
-
-	// Enables or disables the "please wait" screen.
-	void setWaitScreen(boolean set) {
-		findViewById(com.hivetopc.R.id.screen_main).setVisibility(
-				set ? View.GONE : View.VISIBLE);
-		findViewById(com.hivetopc.R.id.screen_wait).setVisibility(
-				set ? View.VISIBLE : View.GONE);
-	}
-
-	void complain(String message) {
-		Log.e(TAG, "**** TrivialDrive Error: " + message);
-		alert("Error: " + message);
-	}
-
-	void alert(String message) {
-		AlertDialog.Builder bld = new AlertDialog.Builder(this);
-		bld.setMessage(message);
-		bld.setNeutralButton("OK", null);
-		Log.d(TAG, "Showing alert dialog: " + message);
-		bld.create().show();
-	}
-
-	void saveData() {
-
-		/*
-		 * WARNING: on a real application, we recommend you save data in a
-		 * secure way to prevent tampering. For simplicity in this sample, we
-		 * simply store the data using a SharedPreferences.
-		 */
-
-	}
-
-	void loadData() {
-
-	}
+ 
+	 
 
 }
